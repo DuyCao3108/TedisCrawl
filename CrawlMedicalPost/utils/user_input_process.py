@@ -1,10 +1,11 @@
 import time
 from utils.constant import WEBSITE_TO_CRAWL, BASEURL_WEBSITE_TO_CRAWL
+from utils.process_websites import *
 
 def get_user_input():
     keyword = input("What keywords to search?")
     max_article = input("What is the max number of articles to crawl?")
-    from_websites = list(filter(lambda x: x == "nhathuoclongchau", WEBSITE_TO_CRAWL))
+    from_websites = WEBSITE_TO_CRAWL
 
     inputDict = {
         "keyword": keyword,
@@ -16,29 +17,47 @@ def get_user_input():
 
 def get_url_from_input(inputDict):
     from_websites = inputDict['from_websites']
-    keyword = inputDict['keyword']
     start_urls = []
     
     # convert to url
     for from_website in from_websites:
-        base_url = BASEURL_WEBSITE_TO_CRAWL[from_website]
-        
         if from_website == "vinmec": 
             start_url = ""
             start_urls.append(start_url)
+
         elif from_website == "nhathuoclongchau": 
-            start_url = base_url
-            keyword_splited = keyword.split(" ")
-            start_url += keyword_splited[0]
-
-            if len(keyword_splited) <= 1: start_url 
-            else:
-                for character in keyword_splited[1:]:
-                    start_url += f"+{character}"
-
+            ntLongChau_processor = ntLongChau(inputDict)
+            start_url = ntLongChau_processor.create_start_url()
             start_urls.append(start_url)
+
         elif from_website == "hellobacsi": 
-            start_url = ""
+            helloBacsi_processor = helloBacsi(inputDict)
+            start_url = helloBacsi_processor.create_start_url()
+            start_urls.append(start_url)
+        
+        elif from_website == "medlatec": 
+            medlatec_processor = medlatec(inputDict)
+            start_url = medlatec_processor.create_start_url()
+            start_urls.append(start_url)
+        
+        elif from_website == "suckhoedoisong": 
+            suckhoedoisong_processor = suckhoedoisong(inputDict)
+            start_url = suckhoedoisong_processor.create_start_url()
+            start_urls.append(start_url)
+
+        elif from_website == "youmed": 
+            youmed_processor = youmed(inputDict)
+            start_url = youmed_processor.create_start_url()
+            start_urls.append(start_url)
+
+        elif from_website == "doctortuan": 
+            doctortuan_processor = doctortuan(inputDict)
+            start_url = doctortuan_processor.create_start_url()
+            start_urls.append(start_url)
+
+        elif from_website == "tamanhhospital": 
+            tamanhhospital_processor = tamanhhospital(inputDict)
+            start_url = tamanhhospital_processor.create_start_url()
             start_urls.append(start_url)
 
     inputDict['start_urls'] = start_urls

@@ -11,13 +11,14 @@ class MedicalPostSpider(scrapy.Spider):
         inputDict_with_url = get_url_from_input(inputDict)
         # get url 
         urls = inputDict_with_url['start_urls']
+        print(urls)
         # start crawling on urls
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        print(response)
-        print("done")
+        print("===========DONE=========")
+        print("GOT!", response.url)
         
         
         
