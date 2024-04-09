@@ -48,7 +48,7 @@ class medlatec():
 
     def create_start_url(self):
         keyword = self.inputDict['keyword']
-        start_url = self.base_url
+        start_url = self.base_url + "/tim-kiem-thong-tin?keyword="
 
         keyword_splited = keyword.split(" ")
         start_url += keyword_splited[0]
@@ -69,7 +69,7 @@ class suckhoedoisong():
 
     def create_start_url(self):
         keyword = self.inputDict['keyword']
-        start_url = self.base_url
+        start_url = self.base_url + "/tim-kiem.htm?keywords="
 
         keyword_splited = keyword.split(" ")
         start_url += keyword_splited[0]
@@ -88,7 +88,7 @@ class tamanhhospital():
 
     def create_start_url(self):
         keyword = self.inputDict['keyword']
-        start_url = self.base_url
+        start_url = self.base_url + "/?s="
 
         keyword_splited = keyword.split(" ")
         start_url += keyword_splited[0]
@@ -126,7 +126,7 @@ class doctortuan():
 
     def create_start_url(self):
         keyword = self.inputDict['keyword']
-        start_url = self.base_url
+        start_url = self.base_url + "/search?query="
 
         keyword_splited = keyword.split(" ")
         start_url += keyword_splited[0]

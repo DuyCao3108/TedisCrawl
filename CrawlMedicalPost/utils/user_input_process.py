@@ -64,5 +64,26 @@ def get_url_from_input(inputDict):
     
     return inputDict
 
+def get_current_website_info(start_url):
+    current_web_info = {
+        "current_web": "",
+        "current_base_url": ""
+    }
 
+    if "tamanhhospital" in start_url:
+        current_web_info['current_web'] = 'tamanhhospital'
+        current_web_info['current_base_url'] = BASEURL_WEBSITE_TO_CRAWL['tamanhhospital']
+        return current_web_info
+    elif "doctortuan" in start_url:
+        current_web_info['current_web'] = 'doctortuan'
+        current_web_info['current_base_url'] = BASEURL_WEBSITE_TO_CRAWL['doctortuan']
+        return current_web_info
+    elif "suckhoedoisong" in start_url:
+        current_web_info['current_web'] = 'suckhoedoisong'
+        current_web_info['current_base_url'] = BASEURL_WEBSITE_TO_CRAWL['suckhoedoisong']
+        return current_web_info
+    elif "medlatec" in start_url:
+        current_web_info['current_web'] = 'medlatec'
+        current_web_info['current_base_url'] = BASEURL_WEBSITE_TO_CRAWL['medlatec']
+        return current_web_info
     
