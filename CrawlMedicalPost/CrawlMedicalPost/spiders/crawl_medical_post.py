@@ -1,5 +1,6 @@
 import scrapy
 import math
+from scrapy.exceptions import CloseSpider
 from utils.user_input_process import get_user_input, get_url_from_input, get_current_website_info
 from utils.process_websites import get_query_keyword
 from CrawlMedicalPost.items import CrawlmedicalpostItem
@@ -13,6 +14,9 @@ class MedicalPostSpider(scrapy.Spider):
         # convert to url
         inputDict_with_url = get_url_from_input(inputDict)
         self.inputDict_with_url = inputDict_with_url
+        # define max_item
+        self.current_item_count = 0
+        self.max_item = self.inputDict_with_url['max_article']
         # get url 
         urls = inputDict_with_url['start_urls']
         print("=========== PROCESSING START URLs =========")
@@ -95,40 +99,45 @@ class MedicalPostSpider(scrapy.Spider):
                 yield scrapy.Request(url = full_next_page_url, callback = self.parse, meta = response.meta)
 
     def parse_articles(self, response):
-        print("=========== SCRAPING ITEMS FROM=========")
-        print(response.meta['full_article_url'])
+        if self.current_item_count >= self.max_item:
+            raise CloseSpider("======== Max Item Count Reached! ========")
+        else:
+            print("=========== SCRAPING ITEMS FROM=========")
+            print(response.meta['full_article_url'])
+            # increment item count
+            self.current_item_count += 1
 
-        if response.meta['current_web'] == "doctortuan":
-            Article = CrawlmedicalpostItem()
-            Article['url'] = f"this is a url of {response.url}"
-            Article['title'] = response.css("h1.blog-post-title::text").get()
-            Article['article'] = "this is a article"
-            print(Article)   
-            yield Article
+            if response.meta['current_web'] == "doctortuan":
+                Article = CrawlmedicalpostItem()
+                Article['url'] = f"this is a url of {response.url}"
+                Article['title'] = response.css("h1.blog-post-title::text").get()
+                Article['article'] = "this is a article"
+                print(Article)   
+                yield Article
 
-        elif response.meta['current_web'] == "tamanhhospital":
-            Article = CrawlmedicalpostItem()
-            Article['url'] = f"this is a url of {response.url}"
-            Article['title'] = response.css("div.title > h1::text").get()
-            Article['article'] = response.css("#ftwp-postcontent ::text").extract()
+            elif response.meta['current_web'] == "tamanhhospital":
+                Article = CrawlmedicalpostItem()
+                Article['url'] = f"this is a url of {response.url}"
+                Article['title'] = response.css("div.title > h1::text").get()
+                Article['article'] = response.css("#ftwp-postcontent ::text").extract()
+                
+                yield Article
+
+            elif response.meta['current_web'] == "suckhoedoisong":
+                Article = CrawlmedicalpostItem()
+                Article['url'] = f"this is a url of {response.url}"
+                Article['title'] = response.css("h1.detail-title::text").get()
+                Article['article'] = "this is a article"
+                
+                yield Article
             
-            yield Article
-
-        elif response.meta['current_web'] == "suckhoedoisong":
-            Article = CrawlmedicalpostItem()
-            Article['url'] = f"this is a url of {response.url}"
-            Article['title'] = response.css("h1.detail-title::text").get()
-            Article['article'] = "this is a article"
-            
-            yield Article
-        
-        elif response.meta['current_web'] == "medlatec":
-            Article = CrawlmedicalpostItem()
-            Article['url'] = f"this is a url of {response.url}"
-            Article['title'] = response.css("div.block-posts-single > h1::text").get()
-            Article['article'] = "this is a article"
-            print(Article)   
-            yield Article
+            elif response.meta['current_web'] == "medlatec":
+                Article = CrawlmedicalpostItem()
+                Article['url'] = f"this is a url of {response.url}"
+                Article['title'] = response.css("div.block-posts-single > h1::text").get()
+                Article['article'] = "this is a article"
+                print(Article)   
+                yield Article
 
         
 
