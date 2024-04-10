@@ -64,6 +64,9 @@ DOWNLOADER_MIDDLEWARES = {
     'CrawlMedicalPost.middlewares.ScrapeOpsFakeUserAgentMiddleware': 725,
 }
 
+FEEDS = {
+    'data.json': {'format': 'json'}
+}
 
 
 # Enable or disable extensions
@@ -75,7 +78,7 @@ EXTENSIONS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   "CrawlMedicalPost.pipelines.tamanhhospital_pipeline": 300,
+   "CrawlMedicalPost.pipelines.CrawlMedicalPostPipeline": 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

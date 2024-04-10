@@ -6,9 +6,32 @@
 from scrapy import Item, Field
 
 
-class CrawlmedicalpostItem(Item):
+class tamanhhospitalItem(Item):
     # define the fields for your item here like:
-    url = Field()
+    website = Field()
     title = Field()
+    url = Field()
+    article = Field()
+    
+
+class doctortuanItem(Item):
+    # define the fields for your item here like:
+    website = Field()
+    title = Field()
+    url = Field()
+    article = Field()
+
+class suckhoedoisongItem(Item):
+    # define the fields for your item here like:
+    website = Field()
+    title = Field()
+    url = Field()
+    article = Field()
+
+class medlatecItem(Item):
+    # define the fields for your item here like:
+    website = Field()
+    title = Field()
+    url = Field()
     article = Field()
     
