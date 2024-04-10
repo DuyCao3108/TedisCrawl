@@ -31,7 +31,7 @@ class CrawlMedicalPostPipeline:
         adapter['article'] = joined_article
         adapter['website'] = "doctortuan"
 
-        print(adapter.items())
+        # print(adapter.items())
         return item
     
     def process_suckhoedoisongItem(self, item, spider):
@@ -40,7 +40,7 @@ class CrawlMedicalPostPipeline:
         adapter['article'] = joined_article
         adapter['website'] = "suckhoedoisong"
 
-        print(adapter.items())
+        # print(adapter.items())
         return item
     
     def process_medlatecItem(self, item, spider):
@@ -49,7 +49,7 @@ class CrawlMedicalPostPipeline:
         adapter['article'] = joined_article
         adapter['website'] = "medlatec"
 
-        print(adapter.items())
+        # print(adapter.items())
         return item
 
     def process_tamanhhospitalItem(self, item, spider):
@@ -58,6 +58,6 @@ class CrawlMedicalPostPipeline:
         adapter['article'] = joined_article
         adapter['website'] = "tamanhhospital"
 
-        print(adapter.items())
+        # print(adapter.items())
         return item
         

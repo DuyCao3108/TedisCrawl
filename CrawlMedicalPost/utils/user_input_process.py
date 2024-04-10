@@ -2,9 +2,9 @@ import time
 from utils.constant import WEBSITE_TO_CRAWL, BASEURL_WEBSITE_TO_CRAWL
 from utils.process_websites import *
 
-def get_user_input():
-    keyword = input("What keywords to search?")
-    max_article = int(input("What is the max number of articles to crawl?"))
+def get_user_input(keyword, max_article):
+    # keyword = input("What keywords to search?")
+    # max_article = int(input("What is the max number of articles to crawl?"))
     from_websites = WEBSITE_TO_CRAWL
 
     inputDict = {

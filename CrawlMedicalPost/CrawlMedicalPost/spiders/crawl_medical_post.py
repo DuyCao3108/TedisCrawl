@@ -10,13 +10,16 @@ class MedicalPostSpider(scrapy.Spider):
 
     def start_requests(self):
         # get user input
-        inputDict = get_user_input()
+        keyword = getattr(self,"keyword",None)
+        max_article = int(getattr(self,"max_article",0))
+        inputDict = get_user_input(keyword, max_article)
         # convert to url
         inputDict_with_url = get_url_from_input(inputDict)
         self.inputDict_with_url = inputDict_with_url
         # define max_item
         self.current_item_count = 0
-        self.max_item = self.inputDict_with_url['max_article']
+        self.max_item = max_article
+        print("=====TYPE OF MAX ITEM =====",type(self.max_item))
         # get url 
         urls = inputDict_with_url['start_urls']
         print("=========== PROCESSING START URLs =========")
@@ -38,7 +41,7 @@ class MedicalPostSpider(scrapy.Spider):
             for article_url in article_urls:
                 full_article_url = current_base_url + article_url
                 response.meta['full_article_url'] = full_article_url
-                print(f"Full article url: {full_article_url}")
+                # print(f"Full article url: {full_article_url}")
                 yield scrapy.Request(url = full_article_url, callback = self.parse_articles, meta = response.meta)
 
         elif response.meta['current_web'] == "tamanhhospital":
@@ -58,7 +61,7 @@ class MedicalPostSpider(scrapy.Spider):
             for article_url in article_urls:
                 full_article_url = current_base_url + article_url
                 response.meta['full_article_url'] = full_article_url
-                print(f"Full article url: {full_article_url}")
+                # print(f"Full article url: {full_article_url}")
                 yield scrapy.Request(url = full_article_url, callback = self.parse_articles, meta = response.meta)
 
             # GET OTHER PAGES
@@ -73,7 +76,7 @@ class MedicalPostSpider(scrapy.Spider):
 
             for num_page in range(2, number_of_pages + 1):
                 next_page_url = "https://suckhoedoisong.vn/timeline/search.htm?keywords={}&page={}".format(query_keyword, num_page)
-                print(f"Next page url: {next_page_url}")
+                # print(f"Next page url: {next_page_url}")
                 yield scrapy.Request(url = next_page_url, callback = self.parse, meta = response.meta)
 
         elif response.meta['current_web'] == "medlatec":
@@ -112,7 +115,6 @@ class MedicalPostSpider(scrapy.Spider):
                 Article['url'] = f"{response.url}"
                 Article['title'] = response.css("h1.blog-post-title::text").get()
                 Article['article'] = response.css("div.quote ::text").extract() + response.css("div.blog-post.w-richtext ::text").extract()
-                print(Article)   
                 yield Article
 
             elif response.meta['current_web'] == "tamanhhospital":
@@ -136,9 +138,6 @@ class MedicalPostSpider(scrapy.Spider):
                 Article['url'] = f"{response.url}"
                 Article['title'] = response.css("div.block-posts-single > h1::text").get()
                 Article['article'] = response.css("div.block-posts-single > div.shortdescription::text").extract() + response.css("div.block-posts-single > div.description ::text").extract()
-                
-                print(Article) 
-
                 yield Article
 
         
