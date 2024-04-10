@@ -1,5 +1,7 @@
 import scrapy
+import math
 from utils.user_input_process import get_user_input, get_url_from_input, get_current_website_info
+from utils.process_websites import get_query_keyword
 from CrawlMedicalPost.items import CrawlmedicalpostItem
 
 class MedicalPostSpider(scrapy.Spider):
@@ -10,6 +12,7 @@ class MedicalPostSpider(scrapy.Spider):
         inputDict = get_user_input()
         # convert to url
         inputDict_with_url = get_url_from_input(inputDict)
+        self.inputDict_with_url = inputDict_with_url
         # get url 
         urls = inputDict_with_url['start_urls']
         print("=========== PROCESSING START URLs =========")
@@ -53,7 +56,22 @@ class MedicalPostSpider(scrapy.Spider):
                 response.meta['full_article_url'] = full_article_url
                 print(f"Full article url: {full_article_url}")
                 yield scrapy.Request(url = full_article_url, callback = self.parse_articles, meta = response.meta)
-            
+
+            # GET OTHER PAGES
+            number_of_articles = int(response.css("#admwrapper > div.main > div.list__content > div.list__search-page > div > p > span::text").get())
+            number_of_article_per_page = 24
+            number_of_pages = math.ceil(number_of_articles/number_of_article_per_page)
+
+            query_keyword = get_query_keyword(
+                                            from_web = response.meta['current_web'], 
+                                            keyword = self.inputDict_with_url['keyword']
+                                            )
+
+            for num_page in range(2, number_of_pages + 1):
+                next_page_url = "https://suckhoedoisong.vn/timeline/search.htm?keywords={}&page={}".format(query_keyword, num_page)
+                print(f"Next page url: {next_page_url}")
+                yield scrapy.Request(url = next_page_url, callback = self.parse, meta = response.meta)
+
         elif response.meta['current_web'] == "medlatec":
             
             article_urls = response.css("div.search-wrapper > div.post-list div.post-item-info > div.post-item-details a::attr(href)").getall()
@@ -76,7 +94,6 @@ class MedicalPostSpider(scrapy.Spider):
                 print(f"Full next page url: {full_next_page_url}")
                 yield scrapy.Request(url = full_next_page_url, callback = self.parse, meta = response.meta)
 
-    
     def parse_articles(self, response):
         print("=========== SCRAPING ITEMS FROM=========")
         print(response.meta['full_article_url'])

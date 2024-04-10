@@ -3,8 +3,8 @@ WEBSITE_TO_CRAWL = [
                     # "nhathuoclongchau", 
                     # "hellobacsi",
                     
-                    "medlatec",
-                    # "suckhoedoisong",
+                    # "medlatec",
+                    "suckhoedoisong",
                     # "tamanhhospital",
                     
                     # "youmed",

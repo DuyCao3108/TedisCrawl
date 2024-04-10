@@ -138,3 +138,15 @@ class doctortuan():
 
         return start_url
     
+def get_query_keyword(from_web, keyword):
+    if from_web == "suckhoedoisong":
+        keyword_splited = keyword.split(" ")
+        query_keyword = ""
+
+        query_keyword += keyword_splited[0]
+        
+        if len(keyword_splited) <= 1: return query_keyword
+        else:
+            for character in keyword_splited[1:]:
+                query_keyword += f"%20{character}"
+            return query_keyword
