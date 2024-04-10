@@ -4,11 +4,11 @@ WEBSITE_TO_CRAWL = [
                     # "hellobacsi",
                     
                     # "medlatec",
-                    # "suckhoedoisong",
+                    "suckhoedoisong",
                     # "tamanhhospital",
                     
                     # "youmed",
-                    "doctortuan"
+                    # "doctortuan"
                     ]
 
 BASEURL_WEBSITE_TO_CRAWL = {

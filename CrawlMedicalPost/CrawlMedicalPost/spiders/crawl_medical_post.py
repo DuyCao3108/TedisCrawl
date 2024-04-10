@@ -43,12 +43,26 @@ class MedicalPostSpider(scrapy.Spider):
                 yield scrapy.Request(url = full_article_url, callback = self.parse_articles, meta = response.meta)
 
         elif response.meta['current_web'] == "suckhoedoisong":
-            pass
+            
+            article_urls = response.css("div.box-category-item > a::attr(href)").getall()
+            current_base_url = response.meta['current_base_url']
+
+            for article_url in article_urls:
+                full_article_url = current_base_url + article_url
+                response.meta['full_article_url'] = full_article_url
+                print(f"Full article url: {full_article_url}")
+                yield scrapy.Request(url = full_article_url, callback = self.parse_articles, meta = response.meta)
             
         elif response.meta['current_web'] == "medlatec":
-            pass
-        
-            pass
+            
+            article_urls = response.css("div.post-item-info > div.post-item-details  a::attr(href)").getall()
+            current_base_url = response.meta['current_base_url']
+
+            for article_url in article_urls:
+                full_article_url = current_base_url + article_url
+                response.meta['full_article_url'] = full_article_url
+                print(f"Full article url: {full_article_url}")
+                yield scrapy.Request(url = full_article_url, callback = self.parse_articles, meta = response.meta)
     
     
     
@@ -73,10 +87,20 @@ class MedicalPostSpider(scrapy.Spider):
             yield Article
 
         elif response.meta['current_web'] == "suckhoedoisong":
-            pass
+            Article = CrawlmedicalpostItem()
+            Article['url'] = f"this is a url of {response.url}"
+            Article['title'] = response.css("h1.detail-title::text").get()
+            Article['article'] = "this is a article"
+            print(Article)   
+            yield Article
         
         elif response.meta['current_web'] == "medlatec":
-            pass
+            Article = CrawlmedicalpostItem()
+            Article['url'] = f"this is a url of {response.url}"
+            Article['title'] = response.css("div.block-posts-single > h1::text").get()
+            Article['article'] = "this is a article"
+            print(Article)   
+            yield Article
 
         
 

@@ -15,7 +15,7 @@ NEWSPIDER_MODULE = "CrawlMedicalPost.spiders"
 SCRAPEOPS_API_KEY = 'c77ada02-6767-4b0e-bd5d-38aea43c9431'
 SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT = 'https://headers.scrapeops.io/v1/user-agents'
 SCRAPEOPS_FAKE_USER_AGENT_ENABLED = True
-SCRAPEOPS_NUM_RESULTS = 10
+SCRAPEOPS_NUM_RESULTS = 20
 
 SCRAPEOPS_PROXY_ENABLED = True
 SCRAPEOPS_PROXY_SETTINGS = {'residential': 'true', 'country': 'cn'}
@@ -61,7 +61,7 @@ ROBOTSTXT_OBEY = False
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 
 DOWNLOADER_MIDDLEWARES = {
-    'CrawlMedicalPost.middlewares.ScrapeOpsProxyMiddleware': 725,
+    'CrawlMedicalPost.middlewares.ScrapeOpsFakeUserAgentMiddleware': 725,
 }
 
 
