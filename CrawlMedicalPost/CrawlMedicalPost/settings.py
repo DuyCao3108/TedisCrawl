@@ -68,14 +68,14 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
-#EXTENSIONS = {
-#    "scrapy.extensions.telnet.TelnetConsole": None,
-#}
+EXTENSIONS = {
+   "scrapy.extensions.closespider.CloseSpider": 200,
+}
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   "CrawlMedicalPost.pipelines.CrawlmedicalpostPipeline": 300,
+   "CrawlMedicalPost.pipelines.tamanhhospital_pipeline": 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

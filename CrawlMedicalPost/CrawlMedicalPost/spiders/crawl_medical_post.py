@@ -110,8 +110,8 @@ class MedicalPostSpider(scrapy.Spider):
             Article = CrawlmedicalpostItem()
             Article['url'] = f"this is a url of {response.url}"
             Article['title'] = response.css("div.title > h1::text").get()
-            Article['article'] = "this is a article"
-            print(Article)   
+            Article['article'] = response.css("#ftwp-postcontent ::text").extract()
+            
             yield Article
 
         elif response.meta['current_web'] == "suckhoedoisong":
@@ -119,7 +119,7 @@ class MedicalPostSpider(scrapy.Spider):
             Article['url'] = f"this is a url of {response.url}"
             Article['title'] = response.css("h1.detail-title::text").get()
             Article['article'] = "this is a article"
-            print(Article)   
+            
             yield Article
         
         elif response.meta['current_web'] == "medlatec":

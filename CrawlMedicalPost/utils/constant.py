@@ -4,8 +4,8 @@ WEBSITE_TO_CRAWL = [
                     # "hellobacsi",
                     
                     # "medlatec",
-                    "suckhoedoisong",
-                    # "tamanhhospital",
+                    # "suckhoedoisong",
+                    "tamanhhospital",
                     
                     # "youmed",
                     # "doctortuan"
@@ -28,5 +28,4 @@ BASEURL_WEBSITE_TO_CRAWL = {
     # https://doctortuan.webflow.io/search?query=công+dụng+vitamin+c
     "tamanhhospital": "https://tamanhhospital.vn"
     # https://tamanhhospital.vn/?s=công+dụng+vitamin+c
-
 }
