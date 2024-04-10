@@ -12,6 +12,7 @@ class MedicalPostSpider(scrapy.Spider):
         inputDict_with_url = get_url_from_input(inputDict)
         # get url 
         urls = inputDict_with_url['start_urls']
+        print("=========== PROCESSING START URLs =========")
         print(urls)
         # start crawling on urls
         for url in urls:
@@ -19,7 +20,7 @@ class MedicalPostSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse, meta = current_web_info)
 
     def parse(self, response):
-        print("===========RECEIVED RESPONSE FROM=========")
+        print("=========== RECEIVED RESPONSE FROM =========")
         print(response.meta['current_web'])
 
         if response.meta['current_web'] == "doctortuan":
@@ -55,7 +56,7 @@ class MedicalPostSpider(scrapy.Spider):
             
         elif response.meta['current_web'] == "medlatec":
             
-            article_urls = response.css("div.post-item-info > div.post-item-details  a::attr(href)").getall()
+            article_urls = response.css("div.search-wrapper > div.post-list div.post-item-info > div.post-item-details a::attr(href)").getall()
             current_base_url = response.meta['current_base_url']
 
             for article_url in article_urls:
@@ -63,8 +64,18 @@ class MedicalPostSpider(scrapy.Spider):
                 response.meta['full_article_url'] = full_article_url
                 print(f"Full article url: {full_article_url}")
                 yield scrapy.Request(url = full_article_url, callback = self.parse_articles, meta = response.meta)
-    
-    
+
+            # GET NEX PAGES
+            doHaveMoreThanOnePage = response.css("li.page-item.active") != None
+            doReachTheEndPage = len(response.css("li.page-item.active + span + li.disabled.page-item")) > 0
+
+            if doHaveMoreThanOnePage == True and doReachTheEndPage == False: 
+                next_page_url = response.css("li.page-item.active + li.page-item > a::attr(href)").get()
+                full_next_page_url = current_base_url + next_page_url
+                response.meta['full_next_page_url'] = full_next_page_url
+                print(f"Full next page url: {full_next_page_url}")
+                yield scrapy.Request(url = full_next_page_url, callback = self.parse, meta = response.meta)
+
     
     def parse_articles(self, response):
         print("=========== SCRAPING ITEMS FROM=========")
