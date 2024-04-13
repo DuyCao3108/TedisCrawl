@@ -6,13 +6,19 @@
 from scrapy import Item, Field
 
 
+class vinmecItem(Item):
+    # define the fields for your item here like:
+    website = Field()
+    title = Field()
+    url = Field()
+    article = Field()
+
 class tamanhhospitalItem(Item):
     # define the fields for your item here like:
     website = Field()
     title = Field()
     url = Field()
     article = Field()
-    
 
 class doctortuanItem(Item):
     # define the fields for your item here like:

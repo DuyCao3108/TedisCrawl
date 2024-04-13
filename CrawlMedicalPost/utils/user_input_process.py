@@ -22,7 +22,8 @@ def get_url_from_input(inputDict):
     # convert to url
     for from_website in from_websites:
         if from_website == "vinmec": 
-            start_url = ""
+            vinmec_processor = vinmec(inputDict)
+            start_url = vinmec_processor.create_start_url()
             start_urls.append(start_url)
 
         elif from_website == "nhathuoclongchau": 
@@ -85,5 +86,9 @@ def get_current_website_info(start_url):
     elif "medlatec" in start_url:
         current_web_info['current_web'] = 'medlatec'
         current_web_info['current_base_url'] = BASEURL_WEBSITE_TO_CRAWL['medlatec']
+        return current_web_info
+    elif "vinmec" in start_url:
+        current_web_info['current_web'] = 'vinmec'
+        current_web_info['current_base_url'] = BASEURL_WEBSITE_TO_CRAWL['vinmec']
         return current_web_info
     

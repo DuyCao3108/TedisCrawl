@@ -3,13 +3,17 @@ from twisted.internet import reactor
 from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
 import sys
+from datetime import datetime
+
+# _{datetime.now().strftime("%Y-%m-%d_%H:%M:%S")}
 
 def main(keyword, max_article):
     configure_logging({"LOG_FORMAT": "%(levelname)s: %(message)s"})
+    
     runner = CrawlerRunner(
         settings={
             "FEEDS": {
-                './storage/data.json': {'format': 'json'}
+                './storage/data.json': {'format': 'json', 'overwrite': True}
             },
             'SCRAPEOPS_API_KEY': 'c77ada02-6767-4b0e-bd5d-38aea43c9431',
             'SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT': 'https://headers.scrapeops.io/v1/user-agents',

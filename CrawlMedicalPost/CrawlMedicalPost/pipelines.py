@@ -7,6 +7,7 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 from CrawlMedicalPost.items import *
+import re
 
 def processing_article(article):
     valid_article = [sentence for sentence in article if "\n" not in sentence]
@@ -23,6 +24,8 @@ class CrawlMedicalPostPipeline:
             self.process_suckhoedoisongItem(item, spider)
         elif isinstance(item, medlatecItem):
             self.process_medlatecItem(item, spider)
+        elif isinstance(item, vinmecItem):
+            self.process_vinmecItem(item, spider)
         return item
     
     def process_doctortuanItem(self, item, spider):
@@ -61,3 +64,12 @@ class CrawlMedicalPostPipeline:
         # print(adapter.items())
         return item
         
+    def process_vinmecItem(self, item, spider):
+        adapter = ItemAdapter(item)
+        joined_article = processing_article(adapter['article'])
+        adapter['article'] = joined_article
+        adapter['title'] = re.sub(r'\W+', ' ', adapter['title'])
+        adapter['website'] = "vinmec"
+
+        # print(adapter.items())
+        return item

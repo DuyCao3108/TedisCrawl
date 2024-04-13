@@ -1,12 +1,16 @@
 import scrapy
 import math
+import re
+from datetime import datetime
 from scrapy.exceptions import CloseSpider
 from utils.user_input_process import get_user_input, get_url_from_input, get_current_website_info
 from utils.process_websites import get_query_keyword
+from utils.helpper import *
 from CrawlMedicalPost.items import *
 
 class MedicalPostSpider(scrapy.Spider):
     name = "medicalpost"
+
 
     def start_requests(self):
         # get user input
@@ -19,7 +23,6 @@ class MedicalPostSpider(scrapy.Spider):
         # define max_item
         self.current_item_count = 0
         self.max_item = max_article
-        print("=====TYPE OF MAX ITEM =====",type(self.max_item))
         # get url 
         urls = inputDict_with_url['start_urls']
         print("=========== PROCESSING START URLs =========")
@@ -101,6 +104,28 @@ class MedicalPostSpider(scrapy.Spider):
                 print(f"Full next page url: {full_next_page_url}")
                 yield scrapy.Request(url = full_next_page_url, callback = self.parse, meta = response.meta)
 
+        elif response.meta['current_web'] == "vinmec":
+
+            article_urls = response.css("#disease-list > div > ul li h3 a::attr(href)").getall()
+            current_base_url = response.meta['current_base_url']
+
+            for article_url in article_urls:
+                full_article_url = current_base_url + article_url
+                response.meta['full_article_url'] = full_article_url
+                print(f"Full article url: {full_article_url}")
+                yield scrapy.Request(url = full_article_url, callback = self.parse_articles, meta = response.meta)
+
+            # GET NEX PAGES
+            maxPages = get_max_page_vinmec(response.css("#disease-list > div > div > span > span::text").get())
+            query_keyword = get_query_keyword(
+                                            from_web = response.meta['current_web'], 
+                                            keyword = self.inputDict_with_url['keyword']
+                                            )
+            
+            for page_num in range(2, maxPages + 1):
+                next_page_url = 'https://www.vinmec.com/vi/bai-viet/tim-kiem/?q={}&page={}'.format(query_keyword, page_num)
+                yield scrapy.Request(url = next_page_url, callback = self.parse, meta = response.meta)
+
     def parse_articles(self, response):
         if self.current_item_count >= self.max_item:
             raise CloseSpider("======== Max Item Count Reached! ========")
@@ -138,6 +163,13 @@ class MedicalPostSpider(scrapy.Spider):
                 Article['url'] = f"{response.url}"
                 Article['title'] = response.css("div.block-posts-single > h1::text").get()
                 Article['article'] = response.css("div.block-posts-single > div.shortdescription::text").extract() + response.css("div.block-posts-single > div.description ::text").extract()
+                yield Article
+            
+            elif response.meta['current_web'] == "vinmec":
+                Article = vinmecItem()
+                Article['url'] = f"{response.url}"
+                Article['title'] = response.css("div.detail-header > h1::text").get()
+                Article['article'] = response.css("div.block-content.pageview-highest ::text ").getall()
                 yield Article
 
         

@@ -1,9 +1,9 @@
 WEBSITE_TO_CRAWL = [
-                    # "vinmec",
+                    "vinmec",
                     # "nhathuoclongchau", 
                     # "hellobacsi",
                     
-                    "doctortuan",
+                    # "doctortuan",
                     "medlatec",
                     "suckhoedoisong",
                     "tamanhhospital"
@@ -12,8 +12,8 @@ WEBSITE_TO_CRAWL = [
                     ]
 
 BASEURL_WEBSITE_TO_CRAWL = {
-    "vinmec": "https://www.vinmec.com/vi/bai-viet/tim-kiem/?q=",
-    # https://www.vinmec.com/vi/bai-viet/tim-kiem/?q=vitamin%20c%20cong%20dung
+    "vinmec": "https://www.vinmec.com/vi/",
+    # https://www.vinmec.com/vi/bai-viet/tim-kiem/?q=vitamin%20c%20công%20dụng
     "nhathuoclongchau": "https://nhathuoclongchau.com.vn/tim-kiem?s=", 
     # https://nhathuoclongchau.com.vn/tim-kiem?s=vitamin+c+cong+dung
     "hellobacsi":"https://hellobacsi.com/search/?s=", 
