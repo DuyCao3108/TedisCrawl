@@ -22,6 +22,8 @@ AUTHORIZATION = "Basic Zm9ydGU6UFJhQyA2RGVWIG9Qd24gT3pKRyB5eU1yIG5qZkI="
 
 WORDPRESS_URL = "https://fortepharma.vn/wp-json/wp/v2/posts"
 
+UPLOAD_FILE_FORMATS = ['*.txt',"*.html"]
+
 GEN_MODE_WORD_LENGTH = {
     "light": 4000,
     "medium": 6000,
