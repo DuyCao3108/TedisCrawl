@@ -1,8 +1,8 @@
-> **Xem video demo tại đây: [Video demo](https://record-project.s3.ap-southeast-2.amazonaws.com/demo1-done.mp4)**
+> **Xem video demo tại đây: [Video demo](https://record-project.s3.ap-southeast-2.amazonaws.com/crawl-demo.mp4)**
 
  # Giới thiệu project
 Dự án được thực hiện dựa trên yêu cầu của team marketing về một Graphical User Interface cho phép người dùng tìm kiếm, cào, tạo mới, đăng tải bài viết thuộc chủ đề dược phẩm. 
-> **Xem video demo tại đây: [Video demo](https://record-project.s3.ap-southeast-2.amazonaws.com/demo1-done.mp4)**
+> **Xem video demo tại đây: [Video demo](https://record-project.s3.ap-southeast-2.amazonaws.com/crawl-demo.mp4)**
 
 Ban đầu, dự án tiếp nhận ba yêu cầu về tính năng sản phẩm: Cào bài viết, Tạo mới bài viết, Đăng tải bài viết.
 
