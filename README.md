@@ -1,5 +1,4 @@
-> Bạn có thể xem video demo này:
-> [Video demo](https://record-project.s3.ap-southeast-2.amazonaws.com/demo1-done.mp4)**
+> **Bạn có thể xem video demo này: [Video demo](https://record-project.s3.ap-southeast-2.amazonaws.com/demo1-done.mp4)**
 
  # Giới thiệu project
 Dự án được thực hiện dựa trên yêu cầu của team marketing về một Graphical User Interface cho phép người dùng tìm kiếm, cào, tạo mới, đăng tải bài viết thuộc chủ đề dược phẩm. 
