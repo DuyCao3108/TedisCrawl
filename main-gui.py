@@ -4,11 +4,11 @@ import subprocess
 import re
 import pandas as pd
 import json
-from subprocess_func.scraper import Scraper
-from subprocess_func.generator import Generator
-from subprocess_func.postman import WordPressMiddleMan
-from subprocess_func.constant import *
-from subprocess_func.utils import *
+from executors.scraper import Scraper
+from executors.generator import Generator
+from executors.postman import WordPressMiddleMan
+from executors.constant import *
+from executors.utils import *
 
 # Global variables:
 post_status = "draft"

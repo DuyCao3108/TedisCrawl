@@ -4,7 +4,7 @@ from langchain.chains import SimpleSequentialChain
 from langchain.prompts import ChatPromptTemplate
 from langchain.chains import SequentialChain
 import pandas as pd
-from subprocess_func.constant import *
+from executors.constant import *
 import pickle
 
 def generate_section_template(article_num_string, num_word):

@@ -1,7 +1,7 @@
 import requests
 import base64
 import json
-from subprocess_func.constant import AUTHORIZATION, WORDPRESS_URL, UPLOAD_FILE_FORMATS
+from executors.constant import AUTHORIZATION, WORDPRESS_URL, UPLOAD_FILE_FORMATS
 import pickle
 import glob
 
